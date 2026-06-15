@@ -329,7 +329,7 @@ export function ChatSidebar({ channel, profile, className }: ChatSidebarProps) {
       )}
     >
       <Card className="flex items-center justify-between gap-2 px-3 py-2">
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="text-display text-xs tracking-wider text-text-tertiary">
             model
           </div>
@@ -339,19 +339,26 @@ export function ChatSidebar({ channel, profile, className }: ChatSidebarProps) {
             size="sm"
             disabled={!canPickModel}
             onClick={() => setModelOpen(true)}
-            suffix={
-              canPickModel ? (
-                <ChevronDown className="text-text-secondary" />
-              ) : undefined
-            }
-            className="self-start min-w-0 px-0 py-0 normal-case tracking-normal text-sm font-medium hover:underline disabled:no-underline"
+            className={cn(
+              "max-w-full min-w-0 px-0 py-0",
+              "self-start normal-case tracking-normal text-sm font-medium",
+              "hover:underline disabled:no-underline",
+            )}
             title={info.model ?? "switch model"}
           >
-            <span className="truncate">{modelLabel}</span>
+            <span className="flex min-w-0 max-w-full items-center gap-1">
+              <span className="truncate">{modelLabel}</span>
+
+              {canPickModel ? (
+                <ChevronDown className="size-3.5 shrink-0 text-text-secondary" />
+              ) : null}
+            </span>
           </Button>
         </div>
 
-        <Badge tone={STATE_TONE[state]}>{STATE_LABEL[state]}</Badge>
+        <Badge tone={STATE_TONE[state]} className="shrink-0">
+          {STATE_LABEL[state]}
+        </Badge>
       </Card>
 
       {banner && (
